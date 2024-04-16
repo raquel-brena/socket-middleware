@@ -1,4 +1,4 @@
-const net = require("net");
+import net from "net";
 
 const passagemData = {
   54: 5.4,
@@ -15,7 +15,7 @@ const localizacaoData = {
 const serverInfo = {
   type: "register",
   service_name: "Servidor de informações de transporte",
-  address: "http://localhost:8080",
+  address: "localhost:8080",
 };
 
 const client = new net.Socket();
@@ -69,6 +69,6 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(1338, "localhost", () => {
+server.listen(8080, "localhost", () => {
   console.log("Servidor TCP rodando em localhost:8080");
 });
