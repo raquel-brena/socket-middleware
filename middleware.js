@@ -31,7 +31,7 @@ const searchService = (socket, name) => {
 
 const server = net.createServer((socket) => {
   socket.on("data", (data) => {
-    console.log("recieved request", data.toString());
+    console.log("received request", data.toString());
     const request = JSON.parse(data.toString());
     if (validate(request)) {
       switch (request.type) {

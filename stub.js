@@ -10,7 +10,7 @@ export default class Stub {
   static async getServerInfo(servico) {
     const serverInfo = {
       type: "search",
-      service_name: "Servidor de informações de transporte" || servico,
+      service_name: servico,
     };
 
     const client = new net.Socket();

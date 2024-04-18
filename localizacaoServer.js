@@ -1,21 +1,17 @@
 import net from "net";
 
-const passagemData = {
-  54: 5.4,
-  73: 7.2,
-  46: 4.9,
-};
-
 const localizacaoData = {
   A123: { latitude: 40.7128, longitude: -74.006 },
   B456: { latitude: 34.0522, longitude: -118.2437 },
   C789: { latitude: 51.5074, longitude: -0.1278 },
 };
 
+const port = 8080;
+
 const serverInfo = {
   type: "register",
-  service_name: "Servidor de informações de transporte",
-  address: "localhost:8080",
+  service_name: "Servidor de informações de localizacao de transporte",
+  address: `localhost:${port}`,
 };
 
 const client = new net.Socket();
@@ -43,14 +39,7 @@ const server = net.createServer((socket) => {
 
     let response;
 
-    if (service === "passagem") {
-      const price = passagemData[param];
-      if (price !== undefined) {
-        response = `O preço da passagem da linha ${param} é $${price}`;
-      } else {
-        response = "Linha não encontrada";
-      }
-    } else if (service === "localizacao") {
+     if (service === "localizacao") {
       const location = localizacaoData[param];
       if (location !== undefined) {
         response = `A localização do ônibus ${param} é (${location.latitude}, ${location.longitude})`;
@@ -69,6 +58,6 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(8080, "localhost", () => {
-  console.log("Servidor TCP rodando em localhost:8080");
+server.listen(port, "localhost", () => {
+  console.log(`Servidor TCP rodando em localhost:${port}`);
 });
