@@ -1,6 +1,6 @@
 import net from "net";
 
-const passagemData = {
+const ticketData  = {
   54: 5.4,
   73: 7.2,
   46: 4.9,
@@ -10,27 +10,27 @@ const port = 8081;
 
 const serverInfo = {
   type: "register",
-  service_name: "Servidor de informações de passagem de transporte",
+  service_name: "Transport Ticket Information Server",
   address: `localhost:${port}`,
 };
 
 const client = new net.Socket();
 
 client.connect(1337, "localhost", () => {
-  console.log("Conectado ao middleware");
+  console.log("Connected to middleware");
   client.write(`${JSON.stringify(serverInfo)}`);
   client.on("data", (data) => {
-    console.log("Resposta do middleware:", data.toString().trim());
+    console.log("Middleware response:", data.toString().trim());
   });
   client.end();
 });
 
 client.on("close", () => {
-  console.log("Conexão com middleware fechada");
+  console.log("Connection with middleware closed");
 });
 
 const server = net.createServer((socket) => {
-  console.log("Cliente conectado");
+  console.log("Client connected");
 
   socket.on("data", (data) => {
     const requestData = data.toString().trim().split(":");
@@ -39,25 +39,25 @@ const server = net.createServer((socket) => {
 
     let response;
 
-    if (service === "passagem") {
-      const price = passagemData[param];
+    if (service === "ticket") {
+      const price = ticketData[param];
       if (price !== undefined) {
-        response = `O preço da passagem da linha ${param} é $${price}`;
+        response = `The ticket price for line ${param} is ${price}`;
       } else {
-        response = "Linha não encontrada";
+        response = "Bus code not found";
       }
     } else {
-      response = "Serviço não reconhecido";
+      response = "Service not recognized";
     }
 
     socket.write(response + "\r\n");
   });
 
   socket.on("end", () => {
-    console.log("Cliente desconectado");
+    console.log("Client disconnected");
   });
 });
 
 server.listen(port, "localhost", () => {
-  console.log(`Servidor TCP rodando em localhost:${port}`);
+  console.log(`TCP server running on localhost:${port}`);
 });
