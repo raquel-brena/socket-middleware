@@ -3,6 +3,7 @@ import net from "net";
 export default class Stub {
   static #_middleware = "localhost";
   static #_middlewarePort = 1337;
+
   constructor() {
     this._stub = true;
   }
@@ -31,7 +32,7 @@ export default class Stub {
     });
   }
 
-  static async getBusFare(service, question) {
+  static async getInformation(service, question) {
     const client = new net.Socket();
 
     return new Promise(async (resolve, reject) => {

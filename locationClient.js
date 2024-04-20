@@ -9,7 +9,7 @@ const questions = [
 
 try {
   for (const question of questions) {
-    console.log(await Stub.getBusFare("Transport Location Information Server",question));
+    console.log(await Stub.getInformation("Transport Location Information Server", question));
   }
 } catch (error) {
   console.error(error);
