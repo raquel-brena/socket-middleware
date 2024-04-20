@@ -55,5 +55,5 @@ const server = net.createServer((socket) => {
 });
 
 server.listen(1337, () => {
-  console.log("Server is running on port 1337");
+  console.log("TCP Server is running on port 1337");
 });
