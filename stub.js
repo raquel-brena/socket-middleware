@@ -31,7 +31,28 @@ export default class Stub {
     });
   }
 
-  static async getBusFare(linha) {
+  static async getBusFare(service, question) {
     const client = new net.Socket();
+
+    return new Promise(async (resolve, reject) => {
+      const { address, port } = await this.getServerInfo(service);
+
+      client.connect(port, address, () => {
+        client.write(question);
+
+        client.on("data", (data) => {
+          const response = data.toString().trim();
+          resolve(response);
+
+          client.on("error", (error) => {
+            reject(error);
+          });
+        });
+      });
+
+      client.on("close", () => {
+        console.log("Connection closed");
+      });
+    });
   }
 }
